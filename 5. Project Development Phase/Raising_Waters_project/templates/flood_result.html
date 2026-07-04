@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="result-section">
+    <div class="container">
+        <div class="result-card glass-panel border-0 shadow-lg">
+            <!-- Danger Header -->
+            <div class="result-banner result-banner-danger">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h1 class="fw-bold m-0">Flood Risk Detected!</h1>
+                <p class="lead mb-0 mt-2">Critical weather and rainfall conditions indicate a high likelihood of flooding in {{ subdivision }}.</p>
+            </div>
+            
+            <div class="result-body">
+                <h4 class="text-start border-bottom pb-2 text-dark"><i class="fa-solid fa-calculator text-danger me-2"></i>Prediction Summary</h4>
+                
+                <div class="result-meta-grid text-start">
+                    <div class="result-meta-item">
+                        <div class="result-meta-val text-danger">{{ jun_sep }} mm</div>
+                        <div class="result-meta-lbl">Jun-Sep Cumulative Rainfall</div>
+                    </div>
+                    <div class="result-meta-item">
+                        <div class="result-meta-val">{{ confidence }}%</div>
+                        <div class="result-meta-lbl">Prediction Confidence</div>
+                    </div>
+                    <div class="result-meta-item">
+                        <div class="result-meta-val text-muted">{{ model_name }}</div>
+                        <div class="result-meta-lbl">Algorithm Model Used</div>
+                    </div>
+                    <div class="result-meta-item">
+                        <div class="result-meta-val text-success">{{ model_accuracy }}</div>
+                        <div class="result-meta-lbl">Underlying Model Accuracy</div>
+                    </div>
+                </div>
+
+                <div class="card border-danger bg-light text-start mb-4">
+                    <div class="card-header bg-danger text-white fw-bold">
+                        <i class="fa-solid fa-shield-cat me-2"></i>Immediate Safety Measures & Action Plan
+                    </div>
+                    <div class="card-body">
+                        <ul class="mb-0 ps-3 text-secondary small" style="line-height: 1.8;">
+                            <li><strong>Evacuate immediately</strong> if instructed by local municipal emergency groups.</li>
+                            <li>Move essential belongings and files to <strong>higher ground</strong> or upper levels of the structure.</li>
+                            <li><strong>Avoid driving</strong> through waterlogged streets. Just 6 inches of moving water can knock you off balance.</li>
+                            <li>Assemble an <strong>emergency survival kit</strong> containing non-perishable foodstuffs, fresh water, flashlights, medicines, and a battery radio.</li>
+                            <li>Consistently monitor local radio broadcasts, news alerts, and government weather bulletins.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 justify-content-center mt-4">
+                    <a href="{{ url_for('predict') }}" class="btn btn-primary-custom"><i class="fa-solid fa-redo me-2"></i>Predict Again</a>
+                    <a href="{{ url_for('home') }}" class="btn btn-secondary-custom"><i class="fa-solid fa-home me-2"></i>Go Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

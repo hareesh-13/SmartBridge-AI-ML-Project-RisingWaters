@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner-custom"></div>
+    <h3 class="fw-bold">Calculating Flood Probability...</h3>
+    <p class="small text-muted">Running meteorological parameters through Decision Tree model.</p>
+</div>
+
+<section class="predict-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="section-header">
+                    <div class="section-tag">Model Execution</div>
+                    <h2 class="section-title">Flood Risk Assessment</h2>
+                    <p class="section-desc">Enter the meteorological measurements below to run prediction models. You can also use the preset demo buttons to auto-fill sample measurements.</p>
+                </div>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show rounded-3 mb-4" role="alert">
+                                <i class="fa-solid fa-triangle-exclamation me-2"></i>{{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="glass-panel p-5">
+                    <div class="d-flex flex-wrap gap-2 justify-content-end mb-4">
+                        <button type="button" class="btn btn-outline-danger btn-sm rounded-pill" onclick="loadDemo(true)">
+                            <i class="fa-solid fa-cloud-showers-heavy me-1"></i>Load Flood Demo
+                        </button>
+                        <button type="button" class="btn btn-outline-success btn-sm rounded-pill" onclick="loadDemo(false)">
+                            <i class="fa-solid fa-sun me-1"></i>Load Safe Weather Demo
+                        </button>
+                    </div>
+
+                    <form id="predictForm" method="POST" action="{{ url_for('predict') }}">
+                        <div class="row g-4">
+                            <!-- Subdivision selector -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="subdivision_code">Meteorological Subdivision</label>
+                                    <div class="input-icon-wrapper">
+                                        <select class="form-control-custom form-select" id="subdivision_code" name="subdivision_code" required>
+                                            {% for sub in subdivisions %}
+                                                <option value="{{ sub.code }}" {% if form_data and form_data.get('subdivision_code')|int == sub.code %}selected{% endif %}>{{ sub.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <i class="fa-solid fa-map-location-dot"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Temperature -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="temperature">Average Temperature (&deg;C)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="temperature" name="temperature" required min="0" max="60" placeholder="e.g. 28.5" value="{{ form_data.get('temperature', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-temperature-half"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Humidity -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="humidity">Average Humidity (%)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="humidity" name="humidity" required min="0" max="100" placeholder="0 to 100" value="{{ form_data.get('humidity', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-droplet"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cloud Cover -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="cloud_cover">Cloud Cover (%)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="cloud_cover" name="cloud_cover" required min="0" max="100" placeholder="0 to 100" value="{{ form_data.get('cloud_cover', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-cloud"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Annual Rainfall -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="annual_rainfall">Total Annual Rainfall (mm)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="annual_rainfall" name="annual_rainfall" required min="0" placeholder="e.g. 3200" value="{{ form_data.get('annual_rainfall', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-cloud-rain"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Jan-Feb Rainfall -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="jan_feb">Jan - Feb Cumulative Rainfall (mm)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="jan_feb" name="jan_feb" required min="0" placeholder="e.g. 25" value="{{ form_data.get('jan_feb', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-cloud-showers-water"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mar-May Rainfall -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="mar_may">Mar - May Cumulative Rainfall (mm)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="mar_may" name="mar_may" required min="0" placeholder="e.g. 150" value="{{ form_data.get('mar_may', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-cloud-showers-water"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Jun-Sep Rainfall -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="jun_sep">Jun - Sep Cumulative Rainfall (mm)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="jun_sep" name="jun_sep" required min="0" placeholder="Threshold: > 1091.89mm triggers warning" value="{{ form_data.get('jun_sep', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-cloud-showers-water"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Oct-Dec Rainfall -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="oct_dec">Oct - Dec Cumulative Rainfall (mm)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="oct_dec" name="oct_dec" required min="0" placeholder="e.g. 300" value="{{ form_data.get('oct_dec', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-cloud-showers-water"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Average June Rainfall -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="avg_june">Average June Rainfall (mm)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="avg_june" name="avg_june" required min="0" placeholder="e.g. 400" value="{{ form_data.get('avg_june', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-cloud-showers-water"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Subdivision Rainfall -->
+                            <div class="col-md-6">
+                                <div class="form-group-custom">
+                                    <label for="subdivision_rainfall">Average Subdivision Rainfall (mm)</label>
+                                    <div class="input-icon-wrapper">
+                                        <input type="number" step="any" class="form-control-custom" id="subdivision_rainfall" name="subdivision_rainfall" required min="0" placeholder="e.g. 2600" value="{{ form_data.get('subdivision_rainfall', '') if form_data else '' }}">
+                                        <i class="fa-solid fa-cloud-showers-water"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12 d-flex gap-3">
+                                <button type="submit" class="btn btn-primary-custom flex-grow-1"><i class="fa-solid fa-chart-bar me-2"></i>Predict Flood Risk</button>
+                                <button type="reset" class="btn btn-secondary-custom"><i class="fa-solid fa-arrow-rotate-right me-2"></i>Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function loadDemo(isFlood) {
+        if (isFlood) {
+            document.getElementById('subdivision_code').value = '33'; // Kerala
+            document.getElementById('temperature').value = '26.8';
+            document.getElementById('humidity').value = '88';
+            document.getElementById('cloud_cover').value = '90';
+            document.getElementById('annual_rainfall').value = '3450';
+            document.getElementById('jan_feb').value = '15.5';
+            document.getElementById('mar_may').value = '345';
+            document.getElementById('jun_sep').value = '2500'; // High rainfall (>1091.89mm)
+            document.getElementById('oct_dec').value = '589.5';
+            document.getElementById('avg_june').value = '650';
+            document.getElementById('subdivision_rainfall').value = '2890';
+        } else {
+            document.getElementById('subdivision_code').value = '15'; // West Rajasthan
+            document.getElementById('temperature').value = '35.4';
+            document.getElementById('humidity').value = '35';
+            document.getElementById('cloud_cover').value = '20';
+            document.getElementById('annual_rainfall').value = '350';
+            document.getElementById('jan_feb').value = '5.0';
+            document.getElementById('mar_may').value = '25';
+            document.getElementById('jun_sep').value = '280'; // Low rainfall (<1091.89mm)
+            document.getElementById('oct_dec').value = '40';
+            document.getElementById('avg_june').value = '65';
+            document.getElementById('subdivision_rainfall').value = '310';
+        }
+    }
+</script>
+{% endblock %}

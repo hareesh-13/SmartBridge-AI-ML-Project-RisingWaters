@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="result-section">
+    <div class="container">
+        <div class="result-card glass-panel border-0 shadow-lg">
+            <!-- Success Header -->
+            <div class="result-banner result-banner-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <h1 class="fw-bold m-0">No Flood Risk Detected</h1>
+                <p class="lead mb-0 mt-2">Meteorological patterns indicate that conditions in {{ subdivision }} appear safe at this time.</p>
+            </div>
+            
+            <div class="result-body">
+                <h4 class="text-start border-bottom pb-2 text-dark"><i class="fa-solid fa-calculator text-success me-2"></i>Prediction Summary</h4>
+                
+                <div class="result-meta-grid text-start">
+                    <div class="result-meta-item">
+                        <div class="result-meta-val text-success">{{ jun_sep }} mm</div>
+                        <div class="result-meta-lbl">Jun-Sep Cumulative Rainfall</div>
+                    </div>
+                    <div class="result-meta-item">
+                        <div class="result-meta-val">{{ confidence }}%</div>
+                        <div class="result-meta-lbl">Prediction Confidence</div>
+                    </div>
+                    <div class="result-meta-item">
+                        <div class="result-meta-val text-muted">{{ model_name }}</div>
+                        <div class="result-meta-lbl">Algorithm Model Used</div>
+                    </div>
+                    <div class="result-meta-item">
+                        <div class="result-meta-val text-success">{{ model_accuracy }}</div>
+                        <div class="result-meta-lbl">Underlying Model Accuracy</div>
+                    </div>
+                </div>
+
+                <div class="card border-success bg-light text-start mb-4">
+                    <div class="card-header bg-success text-white fw-bold">
+                        <i class="fa-solid fa-umbrella me-2"></i>Preparedness Guidelines & Recommendations
+                    </div>
+                    <div class="card-body">
+                        <ul class="mb-0 ps-3 text-secondary small" style="line-height: 1.8;">
+                            <li>Weather appears safe. You can continue with standard seasonal routines.</li>
+                            <li>Consistently monitor local forecasts for sudden storm depressions or weather shifts.</li>
+                            <li>Ensure storm drains and rain gutters near your property are clear of debris.</li>
+                            <li>Stay informed through official disaster management channels.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 justify-content-center mt-4">
+                    <a href="{{ url_for('predict') }}" class="btn btn-primary-custom"><i class="fa-solid fa-redo me-2"></i>Predict Again</a>
+                    <a href="{{ url_for('home') }}" class="btn btn-secondary-custom"><i class="fa-solid fa-home me-2"></i>Go Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

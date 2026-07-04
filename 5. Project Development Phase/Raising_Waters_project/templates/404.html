@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="result-section">
+    <div class="container text-center">
+        <div class="glass-panel p-5 max-width-600 mx-auto">
+            <div class="text-warning fs-1 mb-4"><i class="fa-solid fa-circle-exclamation fa-2xl"></i></div>
+            <h1 class="display-3 fw-bold text-dark mb-3">404</h1>
+            <h3 class="fw-bold mb-3">
+                {% if error_message %}
+                    {{ error_message }}
+                {% else %}
+                    Page Not Found
+                {% endif %}
+            </h3>
+            <p class="text-secondary mb-4">
+                {% if error_message %}
+                    We encountered an unexpected internal error on our servers. Please try again or contact the administrator.
+                {% else %}
+                    The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+                {% endif %}
+            </p>
+            <div class="d-flex gap-3 justify-content-center">
+                <a href="{{ url_for('home') }}" class="btn btn-primary-custom"><i class="fa-solid fa-home me-2"></i>Back to Home</a>
+                <a href="{{ url_for('predict') }}" class="btn btn-secondary-custom"><i class="fa-solid fa-calculator me-2"></i>Predict Risk</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

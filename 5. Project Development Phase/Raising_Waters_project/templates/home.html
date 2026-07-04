@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero-section">
+    <img src="{{ url_for('static', filename='images/hero.jpg') }}" alt="Flood Prediction Background" class="hero-background-img">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="hero-title animate-title">Rising Waters: Intelligent Flood Prediction</h1>
+                <p class="hero-subtitle">An advanced Machine Learning system engineered to analyze historical weather patterns and rainfall aggregates, providing real-time flood risk assessments and early warnings to save lives and protect infrastructure.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('predict') }}" class="btn btn-primary-custom btn-lg"><i class="fa-solid fa-calculator me-2"></i>Predict Flood Risk</a>
+                    <a href="#about" class="btn btn-secondary-custom btn-lg"><i class="fa-solid fa-circle-info me-2"></i>Learn More</a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="glass-panel p-4 text-center">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Rising Waters Logo" class="img-fluid mb-3" style="max-height: 200px;">
+                    <h4 class="text-dark">Early Alert System</h4>
+                    <p class="text-secondary small mb-0">Empowering disaster management teams with data-backed predictions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wave Separator -->
+<div class="wave-separator">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path fill="#ffffff" fill-opacity="1" d="M0,96L80,112C160,128,320,160,480,160C640,160,80,128,960,112C1120,96,1280,64,1360,48L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+    </svg>
+</div>
+
+<!-- Statistics Counter Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="96.55" data-percent="true">0%</div>
+                    <div class="stat-label">Model Accuracy</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="35">0</div>
+                    <div class="stat-label">Subdivisions Covered</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="115">0</div>
+                    <div class="stat-label">Years of Historical Data Analyzed</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5 my-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <img src="{{ url_for('static', filename='images/flood.jpg') }}" alt="Flood Damage Mitigation" class="img-fluid rounded-4 shadow-lg">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-tag">About The Project</div>
+                <h2 class="fw-bold mb-4">What is Rising Waters?</h2>
+                <p class="text-secondary leading-relaxed">Rising Waters is a state-of-the-art predictive platform that utilizes historical meteorological and hydrological parameters to compute the probability of regional flooding. By deploying robust machine learning algorithms, the system aids in forecast models that translate complex data matrices into actionable insights.</p>
+                <div class="row g-4 mt-2">
+                    <div class="col-md-6">
+                        <h5 class="fw-bold text-dark"><i class="fa-solid fa-circle-check text-info me-2"></i>Importance of Flood Prediction</h5>
+                        <p class="small text-secondary">Proactive warnings give responders the buffer time needed to construct barriers and save agricultural fields, commercial hubs, and residences.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="fw-bold text-dark"><i class="fa-solid fa-bolt text-info me-2"></i>How ML Solves It</h5>
+                        <p class="small text-secondary">Our underlying Decision Tree Classifier examines sub-divisional rainfall distributions to recognize high-risk trends that standard heuristic logic might overlook.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5 bg-light">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Platform Capability</div>
+            <h2 class="section-title">Key System Features</h2>
+            <p class="section-desc">Our intelligent tool offers an exhaustive suite of features custom-built for high-pressure emergency planning.</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3>ML Prediction</h3>
+                    <p>Leverages a Decision Tree classifier trained on extensive seasonal, annual, and sub-divisional meteorological records.</p>
+                </div>
+            </div>
+            <!-- Feature 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3>Early Warning System</h3>
+                    <p>Flags severe anomalies instantly to warn administrative units, reducing lag times in disaster notifications.</p>
+                </div>
+            </div>
+            <!-- Feature 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3>Real-Time Assessment</h3>
+                    <p>Evaluates humidity, cloud cover, temperature, and cumulative rainfall dynamically to generate quick hazard reports.</p>
+                </div>
+            </div>
+            <!-- Feature 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3>Preparedness Support</h3>
+                    <p>Delivers practical suggestions such as evacuation checksheets and shelter maps based on predicted outcomes.</p>
+                </div>
+            </div>
+            <!-- Feature 5 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3>Accurate Forecasting</h3>
+                    <p>Trained to predict historical flood conditions with a verified 96.55% testing accuracy under cross-validation.</p>
+                </div>
+            </div>
+            <!-- Feature 6 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h3>Decision Support</h3>
+                    <p>Acts as an analytical backup for civil planning executives, meteorological scientists, and rescue coordinators.</p>
+                </div>
+            </div>
+            <!-- Feature 7 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+                    </div>
+                    <h3>Resource Allocation</h3>
+                    <p>Highlights geographical locations likely to need supplies, maximizing the utility of emergency assets.</p>
+                </div>
+            </div>
+            <!-- Feature 8 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="glass-panel feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <h3>Interactive Dashboard</h3>
+                    <p>Presents outputs using responsive, clean dashboards, allowing rapid analysis on smartphones and desktops.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Workflow Timeline Section -->
+<section id="workflow" class="py-5">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Methodology</div>
+            <h2 class="section-title">Development Workflow</h2>
+            <p class="section-desc">From raw historical observations to interactive predictive alerts, see how our machine learning pipeline is structured.</p>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline-item timeline-item-left">
+                <div class="timeline-content">
+                    <h4>Historical Weather Dataset</h4>
+                    <p>Extracted over a century's worth of meteorological features and flood flags.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-item-right">
+                <div class="timeline-content">
+                    <h4>Data Cleaning</h4>
+                    <p>Removed anomalies, handled null value matrices, and standard-aligned inputs.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-item-left">
+                <div class="timeline-content">
+                    <h4>Exploratory Data Analysis</h4>
+                    <p>Correlated seasonal rain spikes (like June-September monsoon patterns) to historical floods.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-item-right">
+                <div class="timeline-content">
+                    <h4>Feature Engineering</h4>
+                    <p>Derived monthly aggregates and scaled rain variables to optimize mathematical thresholds.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-item-left">
+                <div class="timeline-content">
+                    <h4>Model Training & Evaluation</h4>
+                    <p>Supervised training on a Decision Tree Classifier, yielding a high 96.55% accuracy rating.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-item-right">
+                <div class="timeline-content">
+                    <h4>Deployment & Flask Interface</h4>
+                    <p>Exported using joblib and wrapped into an interactive, production-ready web application.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Real-World Use Cases -->
+<section id="use-cases" class="py-5 bg-light">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Applications</div>
+            <h2 class="section-title">Real-World Scenarios</h2>
+            <p class="section-desc">How stakeholders deploy Rising Waters to make life-saving calls.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-3">
+                    <div class="card-body p-4">
+                        <div class="text-primary fs-3 mb-3"><i class="fa-solid fa-truck-medical"></i></div>
+                        <h5 class="fw-bold">Evacuation Planning</h5>
+                        <p class="small text-secondary">Meteorologists enter current weather statistics during major storm depressions. Rising Waters calculates flood risks, giving local authorities days of warning to establish escape routes and set up shelter zones.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-3">
+                    <div class="card-body p-4">
+                        <div class="text-primary fs-3 mb-3"><i class="fa-solid fa-parachute-box"></i></div>
+                        <h5 class="fw-bold">Resource Allocation</h5>
+                        <p class="small text-secondary">Emergency relief operations use predicted indices to position rescue teams, medical staff, food caches, and boats near high-risk nodes before flood waters block road access.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-3">
+                    <div class="card-body p-4">
+                        <div class="text-primary fs-3 mb-3"><i class="fa-solid fa-check-double"></i></div>
+                        <h5 class="fw-bold">Model Validation</h5>
+                        <p class="small text-secondary">Analysts test model predictions against historical records. The model's 96.55% accuracy provides solid decision support for resource distribution and policy formation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="py-5">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-desc">Get quick answers regarding system performance, model attributes, and input methods.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion faq-accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">
+                                What machine learning model is utilized?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary">
+                                The system runs on a Decision Tree Classifier. It evaluates climatic conditions and cumulative rainfall figures, achieving a testing accuracy score of 96.55%.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false">
+                                Why is the June-September rainfall metric highly significant?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary">
+                                In many Indian sub-divisions, the June-September monsoon period accounts for the bulk of annual rainfall. Statistical correlation shows that excess monsoon precipitation is the primary driver of major flooding.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false">
+                                Can this application run offline?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary">
+                                Yes. The predictive Decision Tree model is loaded locally in Flask via joblib, meaning predictions can be evaluated on local servers without an internet connection.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Get in Touch</div>
+            <h2 class="section-title">Contact Support</h2>
+            <p class="section-desc">Reach out for feedback or system integrations.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="glass-panel p-4">
+                    <form action="#" method="POST" onsubmit="alert('Thank you for contacting us! We will get back to you shortly.'); return false;">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Name</label>
+                            <input type="text" class="form-control" required placeholder="Enter your name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Email Address</label>
+                            <input type="email" class="form-control" required placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Message</label>
+                            <textarea class="form-control" rows="4" required placeholder="Explain your inquiry..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
