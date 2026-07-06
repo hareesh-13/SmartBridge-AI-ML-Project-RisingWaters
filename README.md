@@ -224,11 +224,6 @@ The objective of this project is to predict flood occurrences using Machine Lear
 - IoT Sensor Integration
 - Deep Learning Models
 
----
-
-# Repository
-
-Replace all placeholder files with your **Rising Waters** project deliverables, including reports, source code, screenshots, testing documents, and presentation files.
 
 ---
 
