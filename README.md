@@ -231,7 +231,7 @@ The objective of this project is to predict flood occurrences using Machine Lear
 
 **Project Name:** Rising Waters – Intelligent Flood Prediction and Early Warning System
 
-**Developer:** Hareesh
+**Demo Link** https://drive.google.com/file/d/138dHNk0Pdn93iUgsZC-SRm6B5CoGNUbr/view?usp=drivesdk
 
 ---
 
